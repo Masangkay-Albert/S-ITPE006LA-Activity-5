@@ -10,8 +10,8 @@ namespace S_ITPE006LA___Activity_5.UnitOfWork
         private readonly ApplicationDbContext _context;
 
         private IRepository<Product>? _products;
-        private IRepository<Category>? _categories;
-        private IRepository<Supplier>? _suppliers;
+        private IRepository<Order>? _orders;
+        private IRepository<OrderItem>? _orderItems;
 
         public UnitOfWork(ApplicationDbContext context)
         {
@@ -19,8 +19,8 @@ namespace S_ITPE006LA___Activity_5.UnitOfWork
         }
 
         public IRepository<Product> Products => _products ??= new Repository<Product>(_context);
-        public IRepository<Category> Categories => _categories ??= new Repository<Category>(_context);
-        public IRepository<Supplier> Suppliers => _suppliers ??= new Repository<Supplier>(_context);
+        public IRepository<Order> Orders => _orders ??= new Repository<Order>(_context);
+        public IRepository<OrderItem> OrderItems => _orderItems ??= new Repository<OrderItem>(_context);
 
         public async Task<int> SaveChangesAsync()
         {

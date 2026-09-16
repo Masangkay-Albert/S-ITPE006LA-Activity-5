@@ -17,7 +17,7 @@ namespace S_ITPE006LA___Activity_5.Controllers
         // GET: Products
         public async Task<IActionResult> Index()
         {
-            var products = await _uow.Products.GetAllAsync(p => p.Category!, p => p.Supplier!);
+            var products = await _uow.Products.GetAllAsync();
             return View(products);
         }
 
@@ -26,17 +26,15 @@ namespace S_ITPE006LA___Activity_5.Controllers
         {
             if (id == null) return NotFound();
 
-            var product = await _uow.Products.GetByIdAsync(id.Value, p => p.Category!, p => p.Supplier!);
+            var product = await _uow.Products.GetByIdAsync(id.Value);
             if (product == null) return NotFound();
 
             return View(product);
         }
 
         // GET: Products/Create
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
-            ViewBag.Categories = await _uow.Categories.GetAllAsync();
-            ViewBag.Suppliers = await _uow.Suppliers.GetAllAsync();
             return View();
         }
 
@@ -47,8 +45,6 @@ namespace S_ITPE006LA___Activity_5.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.Categories = await _uow.Categories.GetAllAsync();
-                ViewBag.Suppliers = await _uow.Suppliers.GetAllAsync();
                 return View(product);
             }
 
@@ -65,8 +61,6 @@ namespace S_ITPE006LA___Activity_5.Controllers
             var product = await _uow.Products.GetByIdAsync(id.Value);
             if (product == null) return NotFound();
 
-            ViewBag.Categories = await _uow.Categories.GetAllAsync();
-            ViewBag.Suppliers = await _uow.Suppliers.GetAllAsync();
             return View(product);
         }
 
@@ -77,8 +71,6 @@ namespace S_ITPE006LA___Activity_5.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.Categories = await _uow.Categories.GetAllAsync();
-                ViewBag.Suppliers = await _uow.Suppliers.GetAllAsync();
                 return View(product);
             }
 
@@ -92,7 +84,7 @@ namespace S_ITPE006LA___Activity_5.Controllers
         {
             if (id == null) return NotFound();
 
-            var product = await _uow.Products.GetByIdAsync(id.Value, p => p.Category!, p => p.Supplier!);
+            var product = await _uow.Products.GetByIdAsync(id.Value);
             if (product == null) return NotFound();
 
             return View(product);

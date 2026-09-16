@@ -7,8 +7,8 @@ namespace S_ITPE006LA___Activity_5.UnitOfWork
     public interface IUnitOfWork
     {
         IRepository<Product> Products { get; }
-        IRepository<Category> Categories { get; }
-        IRepository<Supplier> Suppliers { get; }
+        IRepository<Order> Orders { get; }
+        IRepository<OrderItem> OrderItems { get; }
 
         Task<int> SaveChangesAsync();
     }

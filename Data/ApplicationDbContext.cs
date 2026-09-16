@@ -10,46 +10,50 @@ namespace S_ITPE006LA___Activity_5.Data
         {
         }
 
-        public DbSet<Category> Categories => Set<Category>();
-        public DbSet<Supplier> Suppliers => Set<Supplier>();
         public DbSet<Product> Products => Set<Product>();
+        public DbSet<Order> Orders => Set<Order>();
+        public DbSet<OrderItem> OrderItems => Set<OrderItem>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // Category
-            modelBuilder.Entity<Category>(entity =>
-            {
-                entity.HasKey(e => e.Id);
-                entity.Property(e => e.Name).IsRequired().HasMaxLength(200);
-            });
-
-            // Supplier
-            modelBuilder.Entity<Supplier>(entity =>
-            {
-                entity.HasKey(e => e.Id);
-                entity.Property(e => e.Name).IsRequired().HasMaxLength(200);
-                entity.Property(e => e.ContactEmail).HasMaxLength(200);
-            });
-
-            // Product
+            // Product entity configuration
             modelBuilder.Entity<Product>(entity =>
             {
                 entity.HasKey(e => e.Id);
+                entity.Property(e => e.SKU).IsRequired().HasMaxLength(50);
                 entity.Property(e => e.Name).IsRequired().HasMaxLength(200);
                 entity.Property(e => e.Price).HasColumnType("decimal(18,2)");
+                entity.Property(e => e.StockQuantity).IsRequired();
+            });
 
-                // Category (one-to-many)
-                entity.HasOne(p => p.Category)
-                      .WithMany(c => c.Products)
-                      .HasForeignKey(p => p.CategoryId)
-                      .OnDelete(DeleteBehavior.Restrict);
+            // Order entity configuration
+            modelBuilder.Entity<Order>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.CustomerEmail).IsRequired().HasMaxLength(200);
+                entity.Property(e => e.OrderDate).IsRequired();
+                entity.Property(e => e.TotalAmount).HasColumnType("decimal(18,2)");
+            });
 
-                // Supplier (one-to-many)
-                entity.HasOne(p => p.Supplier)
-                      .WithMany(s => s.Products)
-                      .HasForeignKey(p => p.SupplierId)
+            // OrderItem entity configuration
+            modelBuilder.Entity<OrderItem>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Quantity).IsRequired();
+                entity.Property(e => e.UnitPrice).HasColumnType("decimal(18,2)");
+
+                // Order (one-to-many)
+                entity.HasOne(oi => oi.Order)
+                      .WithMany(o => o.OrderItems)
+                      .HasForeignKey(oi => oi.OrderId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                // Product (one-to-many)
+                entity.HasOne(oi => oi.Product)
+                      .WithMany(p => p.OrderItems)
+                      .HasForeignKey(oi => oi.ProductId)
                       .OnDelete(DeleteBehavior.Restrict);
             });
         }

@@ -1,0 +1,10 @@
+{
+  "dotnet.dotnetPath": "C:\\Users\\Alen\\.dotnet",
+  "omnisharp.dotnetPath": "C:\\Users\\Alen\\.dotnet",
+  "dotnetAcquisitionExtension.existingPaths": {
+    "extension": "C:\\Users\\Alen\\.dotnet\\dotnet.exe"
+  },
+  "terminal.integrated.env.windows": {
+    "PATH": "C:\\Users\\Alen\\.dotnet;C:\\Users\\Alen\\.dotnet\\tools;${env:PATH}"
+  }
+}
